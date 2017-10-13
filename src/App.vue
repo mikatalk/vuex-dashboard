@@ -4,7 +4,7 @@
       <nav class="inner">
         <ul class="nav">
           <router-link to="/" tag="li" exact>
-            <img width="30" src="/static/mika-i-logo.png" title="Mika I."></i>
+            <img width="30" src="static/mika-i-logo.png" title="Mika I."></i>
             <!-- <i class="fa fa-fw" aria-hidden="true" title=""></i> -->
           </router-link>
           <router-link to="/global" tag="li">Global</router-link>
