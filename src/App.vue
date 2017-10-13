@@ -4,23 +4,20 @@
       <nav class="inner">
         <ul class="nav">
           <router-link to="/" tag="li" exact>
-            <i class="fa fa-fw" aria-hidden="true" title=""></i>
+            <img width="30" src="/static/mika-i-logo.png" title="Mika I."></i>
+            <!-- <i class="fa fa-fw" aria-hidden="true" title=""></i> -->
           </router-link>
           <router-link to="/global" tag="li">Global</router-link>
           <li>
-            <group ref="elementsGroup" :maxHeight="60">  
-              <a slot="header" to="#">Elements</a>
-              <div slot="content" style="position:absolute;">
-                <ul class="sub-nav">   
-                  <router-link to="/element-settings/header" tag="li">Header</router-link>
-                  <router-link to="/element-settings/content" tag="li">Content</router-link>
-                  <router-link to="/element-settings/footer" tag="li">Footer</router-link>
-                </ul>
-              </div>
-            </group>
+            <a to="#">Elements</a>
+            <ul class="sub-nav" style="position:absolute;">   
+              <router-link to="/element-settings/header" tag="li">Header</router-link>
+              <router-link to="/element-settings/content" tag="li">Content</router-link>
+              <router-link to="/element-settings/footer" tag="li">Footer</router-link>
+            </ul>
           </li>
-          <router-link to="/three" tag="li">ThreeJS</router-link>
-          <router-link to="/d3" tag="li">D3</router-link>
+          <!-- <router-link to="/three" tag="li">ThreeJS</router-link> -->
+          <!-- <router-link to="/d3" tag="li">D3</router-link> -->
         </ul>
       </nav>
     </header>
@@ -78,36 +75,37 @@ export default {
         &:hover {
           color: $nav-link-color-hover;
           background-color: $nav-bg-hover;
+
+          ul.sub-nav {
+            li {
+              display: block;
+            }
+          }
+
         }
         a {
           margin: 0;
         }
 
 
-        .group {
-          .header {
+    
+        &.expanded {
+          overflow:visible;
+        }
+        ul.sub-nav {
+          width: 100%;
+          left: 0;
+          top: 2.05rem;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          li {
+            margin: 0;
+            //min-width: 180px;
+            text-align: center;
+            border-top: 1px solid lighten($nav-bg, 10%);
+            display: none;
           }
-          .content {
-            position: absolute;
-            overflow: hidden;
-            &.expanded {
-              overflow:visible;
-            }
-            ul.sub-nav {
-              position: absolute;
-              left: -4.1rem;
-              top: 0.3rem;
-              padding: 0;
-              display: flex;
-              flex-direction: column;
-              li {
-                margin: 0;
-                min-width: 180px;
-                text-align: center;
-                border-top: 1px solid #d2ce0d;
-              }
-            }
-          }  
         }
       }
     }

@@ -17,7 +17,9 @@ export function createRouter () {
       { path: '/global', component: GlobalSettingsView },
       { path: '/three', component: ThreeView },
       { path: '/element-settings/:elementName', component: ElementSettingsView },
-      { path: '/', component: HomeView }
+      { path: '/', component: ThreeView },
+      // { path: '*', component: ThreeView }
+      { path: '*', component: HomeView }
     ]
   })
 }

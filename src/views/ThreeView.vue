@@ -5,6 +5,7 @@
       <canvas ref="canvas"></canvas>
     </div>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   </div>
 </template>
 
@@ -30,24 +31,24 @@ export default {
     this.running = true
     this.clock = new THREE.Clock()
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(75, width / height, 1, 20000)
-    this.camera.position.set(0, -250, 90)
+    this.camera = new THREE.PerspectiveCamera(35, width / height, 1, 20000)
+    this.camera.position.set(0, -300, 65)
     this.camera.lookAt(this.scene.position)
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: canvas,
       antialias: true,
-      stencil: false
-      // transparent: true,
+      stencil: false,
+      alpha: true
     })
-    this.renderer.setClearColor(0, 1)
+    this.renderer.setClearColor(0, 0)
     // this.renderer.setClearColor(0xfafafa, 1)
-    console.log('size:', width, height)
-    this.renderer.setSize(width, height)
-    this.scene.add(
-      new THREE.HemisphereLight(0xffffff, 0x332222),
-      new THREE.AmbientLight(0x999999)
-    )
+    // console.log('size:', width, height)
+    // this.renderer.setSize(width, height)
+    // this.scene.add(
+    //   new THREE.HemisphereLight(0xffffff, 0x332222),
+    //   new THREE.AmbientLight(0x999999)
+    // )
     // let geometry = new THREE.SphereGeometry(10, 10, 10)
     // let material = new THREE.MeshBasicMaterial({
     //   wireframeWidth: 6,
@@ -99,8 +100,8 @@ export default {
     },
 
     handleResize () {
-      const width = this.$refs.container.getBoundingClientRect().width - 2
-      const height = 300
+      const width = this.$refs.container.getBoundingClientRect().width
+      const height = 220
       this.$refs.canvas.width = width
       this.$refs.canvas.height = height
       this.renderer.setSize(width, height)
@@ -120,12 +121,12 @@ export default {
   .container {
     overflow: hidden;
     width: 100%;
-    height: 300px;
-    border: 1px solid transparent;//$side-border-color;
+    height: 220px;
+    border-bottom: 1px solid $nav-bg;
     canvas{
       margin: auto;
       width: 100%;
-      height: 300px;
+      height: 220px;
     }
   }
 }

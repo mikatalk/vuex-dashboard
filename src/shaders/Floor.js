@@ -4,7 +4,7 @@ const noise = `
 
 // 2D Random
 float random (in vec2 st) { 
-  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+  return fract(sin(dot(st.xy, vec2(6.,15.))) + sin(dot(st.xy, vec2(2.8765,23.23))));
 }
 
 // 2D Noise based on Morgan McGuire @morgan3d
@@ -40,30 +40,22 @@ const vs = `
   uniform float sineTime;
   attribute vec4 color;
 
-  varying vec3 vCamPos;
   varying vec3 vPosition;
-  varying vec2 vUv;
+  // varying vec2 vUv;
 
-${noise}
+  ${noise}
 
   void main(){
     float  PI2 = 6.28;
-    vUv = uv;
-    vec3 offset = vec3(0.0);
-
-
-offset.z += noise(position.xy*vec2(.01)+vec2(0.0,time*.2))* 100.0;
-    // offset.z = sin(uv.y*PI2+time*.5)*5.0
-    offset.z = min(offset.z, cos(uv.x*PI2*.2)*100.0);
-offset.z -= 50.0;
-
-vPosition = offset + position;
-
-if ( vPosition.z < -21.0 )
-  vPosition.z = -21.0;
-
-
-vCamPos = cameraPosition;
+    // vUv = uv;
+    vec3 offset = vec3(0.0, 0.0, 0.0);
+    offset.z += noise(position.xy*vec2(.01)+vec2(0.0,time*.2))* 100.0;
+    offset.z = min(offset.z, cos(uv.x*PI2*.2)*250.0);
+    offset.z -= 50.0;
+    vPosition = offset + position;
+    if ( vPosition.z < -1.0 ){
+      vPosition.z = -1.0;
+    }
     gl_Position = projectionMatrix * modelViewMatrix * vec4(  vPosition, 1.0 );
   }
 
@@ -74,34 +66,22 @@ const fs = `
   
   uniform float time;
 
-  varying vec3 vCamPos;
   varying vec3 vPosition;
-  varying vec2 vUv;
-
+  // varying vec2 vUv;
 
   void main() {
     float  PI2 = 6.28;
-    float v = 4.0; //1.0/50.0 * 1.0    
-    vec4 color = vec4(0.);
-    if ( vPosition.z < -20.0 ) // water level
-      color = vec4(0.2, 0.2, 0.8, .2);
-      // color = vec4(.75, .30, 0.7, 1.0)
-      // discard
-    else if (mod(vPosition.z, v) < v/20.0 )
-      color = vec4(.75, .30, 0.7, 1.0);
-      // color.rgba = vec4(.5, .5, .9, 1.0)
-    // else 
-    else
-      // color = vec4(.75, .30, 0.7, .2);
-      discard;
-      // color = vec4(0.2, 0.2, 0.8, .2);
-    // color.r = rand(vPosition.xy)
+    float v = 7.0; 
+    vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
+    if ( vPosition.z < 0.0 ) {  // water level
+      color = vec4(0.1, 0.1, 0.1, .02);
+    } else if (mod(vPosition.z, v) < v/7.0 ) {
+      color = vec4(0.949, 0.929, 0.058, .2) * v/7.0;
+    } else {
+      color = vec4(0.949, 0.929, 0.058, .5);
+    }
+    color.a = min(color.a, clamp(0.0, 1.0, 4.0*cos( min(1.0, length(vPosition.xy)/1000.0) * 3.14)));
     gl_FragColor = color;
-    // gl_FragColor.a = clamp(distance(vPosition.xyz, vCamPos.xyz) / 250., 0.0, 1.0);
-
-    // gl_FragColor.a = min(gl_FragColor.a, cos( min(1.0, distance( vCamPos.xy, vPosition.xy)/2000.0 ) * 3.14)); 
-    // gl_FragColor.a = min(gl_FragColor.a, cos( min(1.0, distance( vCamPos.xy, vPosition.xy)/2000.0 ) * 3.14)); 
-    gl_FragColor.a = min(gl_FragColor.a, clamp(0.0, 1.0, 4.0*cos( min(1.0, length(vPosition.xy)/500.0) * 3.14)));
   }
 
 `
