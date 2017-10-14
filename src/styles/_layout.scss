@@ -14,15 +14,80 @@ body {
   a {
     text-decoration: none;
   }
-  .header {
-    //box-shadow: $box-shadow;
-    //border-bottom: 1px solid $side-border-color;
 
+  .header {
+    background-color: $nav-bg;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
     .inner {
       max-width: 70rem;
-      border-bottom: 4px solid black;
+      box-sizing: border-box;
+      margin: 0px auto;
+      padding: 0;
+      ul.nav {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: flex-start;
+        // justify-content: center;
+        // flex-flow: column;
+        border-bottom: $bar-width solid black;
+        //min-height: 4.5rem;
+
+        li {
+          position: relative;
+          display: inline-block;
+          overflow: visible;
+          margin: 0;
+          font-size: 1.6rem;
+          font-weight: 300;
+          padding: 1.3rem 1rem 0;
+          text-align: center;
+          cursor: pointer;
+          transition: all ease 300ms;
+          color: $nav-link-color;
+          background-color: $nav-bg;
+          min-width: 6rem;
+          border: none;
+          text-shadow: 0px 0px 3px #fafafa;
+          transition: all ease 300ms;
+          border-bottom: 0px solid black;
+          margin-bottom: 0;
+
+          &:hover {
+            color: $nav-link-color-hover;
+            font-weight: 400;
+            background-color: $nav-bg-hover;
+            border-bottom: $bar-width solid #ed1b24;
+            margin-bottom: 0;
+          }
+          &.logo {
+            padding: .75rem;
+            &:hover {
+              border-bottom: 0px solid black;
+              margin-bottom: 0;
+            }
+          }
+
+          a {
+            margin: 0;
+          }
+
+
+      
+          &.expanded {
+            overflow:visible;
+          }
+          
+        }
+      }
     }
   }
+
   .view {
     margin: 0 auto;
     position: relative;
@@ -40,6 +105,7 @@ body {
       margin: 1rem auto;
       font-size: 1.4rem;
     }
+    &.max-width-desktop,
     .max-width-desktop {
       max-width: 68rem;
       margin-right: auto;
@@ -61,6 +127,26 @@ body {
     font-size: 1.2em;
     line-height: 1.2;
 
+    .header {
+      .inner {
+        ul.nav {
+          li {
+            justify-content: center;
+            justify-content: center;
+            flex-flow: column;
+            display: none;
+
+            &.logo {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 0 auto;
+            }
+          }
+        }
+      }
+    }
+    
     .view {
       margin: 0 auto;
       position: relative;
@@ -71,8 +157,10 @@ body {
       border: none;
     }
 
+    &.max-width-desktop,
     .max-width-desktop {
       max-width: 100%;
+
     }
 
   }
