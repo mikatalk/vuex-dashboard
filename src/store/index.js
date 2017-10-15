@@ -6,8 +6,7 @@ import getters from './getters'
 import createLogger from 'vuex/dist/logger'
 
 import ui from './ui'
-import elements from './elements'
-import globalSettings from './global-settings/'
+import three from './three'
 
 Vue.use(Vuex)
 
@@ -21,8 +20,7 @@ export function createStore () {
     getters,
     modules: {
       ui,
-      elements,
-      globalSettings
+      three
     },
     strict: debug,
     plugins: debug ? [createLogger()] : []

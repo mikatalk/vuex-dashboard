@@ -120,8 +120,8 @@ export class Floor {
         derivatives: true
       },
       // side: THREE.DoubleSide,
-      transparent: true
       // wireframe: true,
+      transparent: true
     })
     this.mesh = new THREE.Mesh(geometry, material)
   }

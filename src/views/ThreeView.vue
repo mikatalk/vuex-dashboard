@@ -4,6 +4,7 @@
     <div class="container" ref="container">
       <canvas ref="canvas"></canvas>
     </div>
+    <h1 class="max-width-desktop">ThreeJS Responsive Width Example</h1>
     <div class="max-width-desktop">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -15,6 +16,7 @@
 const THREE = require('three')
 const { deepDispose } = require('./../util/deep-dispose')
 const { Floor } = require('./../shaders/Floor')
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'three-view',
@@ -25,11 +27,30 @@ export default {
   created () {
     this.$store.dispatch('toggleCurrentGroup', null)
   },
+
+  computed: {
+    ...mapGetters([
+      'windowWidth'
+    ])
+  },
+
+  watch: {
+    windowWidth (newWidth, oldWidth) {
+      // handle resize
+      const width = this.$refs.container.getBoundingClientRect().width
+      const height = 220
+      this.$refs.canvas.width = width
+      this.$refs.canvas.height = height
+      this.renderer.setSize(width, height)
+      this.camera.aspect = width / height
+      this.camera.updateProjectionMatrix()
+    }
+  },
+
   mounted () {
     const canvas = this.$refs.canvas
     const width = canvas.width
     const height = canvas.height
-    // const loader = new THREE.JSONLoader()
     this.running = true
     this.clock = new THREE.Clock()
     this.scene = new THREE.Scene()
@@ -44,34 +65,12 @@ export default {
       alpha: true
     })
     this.renderer.setClearColor(0, 0)
-    // this.renderer.setClearColor(0xfafafa, 1)
-    // console.log('size:', width, height)
-    // this.renderer.setSize(width, height)
-    // this.scene.add(
-    //   new THREE.HemisphereLight(0xffffff, 0x332222),
-    //   new THREE.AmbientLight(0x999999)
-    // )
-    // let geometry = new THREE.SphereGeometry(10, 10, 10)
-    // let material = new THREE.MeshBasicMaterial({
-    //   wireframeWidth: 6,
-    //   wireframe: true,
-    //   color: 0x3c3c3c
-    // })
-    // // loader.load('./vue.json', (geometry, material) => {
-    // this.mesh = new THREE.Mesh(
-    //   geometry,
-    //   material
-    // )
-    // this.scene.add(this.mesh)
-
     this.renderer.setPixelRatio(window.devicePixelRatio || 1)
 
     this.floor = new Floor()
     this.scene.add(this.floor.mesh)
     this.tick()
-    // })
-    window.addEventListener('resize', this.handleResize, {passive: true})
-    this.handleResize()
+    // this.handleResize()
   },
   beforeDestroy () {
     this.running = false
@@ -87,8 +86,6 @@ export default {
     // until next garbage collection
     this.$refs.canvas.width = 1
     this.$refs.canvas.height = 1
-    // remove resize handler
-    window.removeEventListener('resize', this.handleResize)
   },
   methods: {
     tick () {
@@ -99,16 +96,6 @@ export default {
       // const elapsed = this.clock.getElapsedTime()
       // this.mesh.rotation.y = elapsed * 50 * THREE.Math.DEG2RAD
       this.renderer.render(this.scene, this.camera)
-    },
-
-    handleResize () {
-      const width = this.$refs.container.getBoundingClientRect().width
-      const height = 220
-      this.$refs.canvas.width = width
-      this.$refs.canvas.height = height
-      this.renderer.setSize(width, height)
-      this.camera.aspect = width / height
-      this.camera.updateProjectionMatrix()
     }
   }
 }
@@ -124,7 +111,6 @@ export default {
     overflow: hidden;
     width: 100%;
     height: 220px;
-//    border-bottom: 1px solid black; // $side-border-color;
     canvas{
       margin: auto;
       width: 100%;

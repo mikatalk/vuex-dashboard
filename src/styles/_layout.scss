@@ -6,8 +6,7 @@ html {
 body {
   font-family: 'Dosis', sans-serif;
   background-color: $bg;
-  margin: 0;
-  margin-top: 6rem;
+  margin: 6rem 0 0;
   color: $text-color;
   overflow-y: scroll;
 
@@ -27,16 +26,14 @@ body {
       box-sizing: border-box;
       margin: 0px auto;
       padding: 0;
+      position: relative;
       ul.nav {
         margin: 0;
         padding: 0;
         display: flex;
         flex-flow: wrap;
         justify-content: flex-start;
-        // justify-content: center;
-        // flex-flow: column;
         border-bottom: $bar-width solid black;
-        //min-height: 4.5rem;
 
         li {
           position: relative;
@@ -66,7 +63,7 @@ body {
             margin-bottom: 0;
           }
           &.logo {
-            padding: .75rem;
+            padding: 1rem .75rem;
             &:hover {
               border-bottom: 0px solid black;
               margin-bottom: 0;
@@ -83,6 +80,51 @@ body {
             overflow:visible;
           }
           
+        }
+
+        
+      }
+
+      .controls-left {
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        align-items: center;
+          color: #ffc608;
+      }
+
+      .controls-right {
+          color: black;
+
+        display: flex;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        align-items: center;
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+      .controls-left,
+      .controls-right {
+        transition: all ease 300ms;
+        i {
+          //color: black;
+          font-size: 1.4rem;
+          line-height: 2.4rem;
+          margin: 0;
+          width: 2.4rem;
+          height: 2.4rem;
+          text-align: center;
+          cursor: pointer;
+        }
+        &.top-scroll-mobile {
+          justify-content: space-between;
+          flex-direction: column;
         }
       }
     }
@@ -114,11 +156,7 @@ body {
       padding-right: 1rem;
     }
   }
-
-  
-
 }
-
 
 
 @media (max-width: $mobile-size) {
@@ -127,41 +165,50 @@ body {
     font-size: 1.2em;
     line-height: 1.2;
 
-    .header {
-      .inner {
-        ul.nav {
-          li {
-            justify-content: center;
-            justify-content: center;
-            flex-flow: column;
-            display: none;
-
-            &.logo {
-              display: flex;
+    body {
+      margin: 12rem 0 0;
+      
+      .header {
+        .inner {
+          ul.nav {
+            border-bottom: $bar-width/2 solid black;
+            li {
               justify-content: center;
-              align-items: center;
-              margin: 0 auto;
+              justify-content: center;
+              flex-flow: column;
+              display: none;
+
+              &.logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+              }
             }
           }
+
+          .controls-left,
+          .controls-right {
+            display: flex;
+          } 
         }
       }
-    }
-    
-    .view {
-      margin: 0 auto;
-      position: relative;
-      overflow: auto;
-      max-width: 68rem;
-      // padding: 0 1rem;
-      padding: 0;
-      border: none;
-    }
+      
+      .view {
+        margin: 0 auto;
+        position: relative;
+        overflow: auto;
+        max-width: 68rem;
+        // padding: 0 1rem;
+        padding: 0;
+        border: none;
+      }
 
-    &.max-width-desktop,
-    .max-width-desktop {
-      max-width: 100%;
+      &.max-width-desktop,
+      .max-width-desktop {
+        max-width: 100%;
 
+      }
     }
-
   }
 }
