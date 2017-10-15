@@ -7,8 +7,10 @@
         <ul class="nav">
           <router-link to="/" tag="li" class="logo" exact>
             <svg viewBox="0 0 150 100"
-                 v-bind:style="{margin: (invertedScrollRatio*2).toFixed(2)+'vh'}" 
-                 :width="logoHeight">
+                 width="75"
+                 v-bind:style="{
+                  margin: (invertedScrollRatio*2).toFixed(2)+'vh',
+                  width:logoHeight}">
               <polygon points="0,0 50,50, 0,50" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <polygon points="100,0 50,50, 100,50" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <polygon points="100,0 150,0, 100,50" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
