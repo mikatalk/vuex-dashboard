@@ -6,15 +6,15 @@
 
         <ul class="nav">
           <router-link to="/" tag="li" class="logo" exact>
-            <svg viewBox="0 0 150 100"
+            <svg viewBox="0 0 75 50"
                  width="75"
                  v-bind:style="{
                   margin: (invertedScrollRatio*2).toFixed(2)+'vh',
                   width:logoHeight}">
-              <polygon points="0,0 50,50, 0,50" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
-              <polygon points="100,0 50,50, 100,50" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
-              <polygon points="100,0 150,0, 100,50" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
-              <polygon points="100,50 100,100, 150,100" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
+              <polygon points="0,0 25,25, 0,25" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
+              <polygon points="50,0 25,25, 50,25" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
+              <polygon points="50,0 75,0, 50,25" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
+              <polygon points="50,25 50,50, 75,50" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <img v-bind:style="{margin: (invertedScrollRatio*25).toFixed(2)+'rem'}"
                    :width="logoHeight" src="static/mika-i-logo.png" 
                    alt="Mika I. - logo"
