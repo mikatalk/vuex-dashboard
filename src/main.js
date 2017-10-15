@@ -1,11 +1,3 @@
-// The Vue build version to load with the `import` command
-// // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-// import Vue from 'vue'
-// import App from './App'
-// import router from './router'
-
-// import 'babel-polyfill'
-
 import './styles/main.scss'
 
 import Vue from 'vue'
@@ -42,16 +34,6 @@ Vue.mixin({
 
 Vue.config.productionTip = false
 
-// /* eslint-disable no-new */
-// new Vue({
-//   el: '#app',
-//   router,
-//   template: '<App/>',
-//   components: { App }
-// })
-
-// const { app, router, store } = createApp()
-
 // mixin for handling title
 Vue.mixin(titleMixin)
 
@@ -67,16 +49,6 @@ const router = createRouter()
 // sync the router with the vuex store.
 // this registers `store.state.route`
 sync(store, router)
-
-// create the app instance.
-// here we inject the router, store and ssr context to all child components,
-// making them available everywhere as `this.$router` and `this.$store`.
-// const app = new Vue({
-//   el: '#app',
-//   router,
-//   template: '<App/>',
-//   components: { App }
-// })
 
 const app = new Vue({
   router,
