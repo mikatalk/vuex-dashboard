@@ -1,18 +1,19 @@
 <template>
   <div id="app" v-resize.debounce="handleResizeDebounce">
+    
     <header class="header">
       <nav class="inner">
 
         <ul class="nav">
           <router-link to="/" tag="li" class="logo" exact>
             <svg viewBox="0 0 150 100"
-                 v-bind:style="{margin: (invertedScrollRatio*5).toFixed(2)+'vh'}" 
+                 v-bind:style="{margin: (invertedScrollRatio*2).toFixed(2)+'vh'}" 
                  :width="logoHeight">
               <polygon points="0,0 50,50, 0,50" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <polygon points="100,0 50,50, 100,50" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <polygon points="100,0 150,0, 100,50" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <polygon points="100,50 100,100, 150,100" style="fill:#ffc708;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
-              <img v-bind:style="{margin: (invertedScrollRatio*5).toFixed(2)+'vh'}"
+              <img v-bind:style="{margin: (invertedScrollRatio*25).toFixed(2)+'rem'}"
                    :width="logoHeight" src="static/mika-i-logo.png" 
                    alt="Mika I. - logo"
                    title="Mika I." />
@@ -26,6 +27,7 @@
         <div class="controls-left" v-bind:class="{'top-scroll-mobile': pageScrollY < 20 }">
           <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
+
         <div class="controls-right" v-bind:class="{'top-scroll-mobile': pageScrollY < 20 }">
           <i class="fa fa-github-alt" aria-hidden="true"></i>
           <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -33,9 +35,11 @@
 
       </nav>
     </header>
+    
     <transition name="fade" mode="out-in">
       <router-view class="view"></router-view>
     </transition>
+
   </div>
 </template>
 
@@ -63,6 +67,7 @@ export default {
     },
 
     invertedScrollRatio () {
+      // match break point in _layout.scss
       if (this.windowWidth > 600) {
         return 0
       }
@@ -71,7 +76,7 @@ export default {
 
     logoHeight () {
       let ratio = this.invertedScrollRatio
-      return ratio * Math.sin(ratio) * 160 + 75
+      return ratio * Math.sin(ratio) * 150 + 75
     }
   },
 

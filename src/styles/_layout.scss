@@ -85,33 +85,16 @@ body {
         
       }
 
-      .controls-left {
-        display: none;
-        position: absolute;
-        top: 0rem;
-        bottom: 0;
-        left: 0;
-        justify-content: space-between;
-
-        &.top-scroll-mobile {
-          top: 4.4rem;
-        }
-      }
-
+      .controls-left,
       .controls-right {
         display: flex;
         flex-direction: column;
         display: flex;
         align-items: center;
-        justify-content: space-between;
         position: absolute;
         align-items: center;
         top: 0;
         bottom: 0;
-        right: 0;
-      }
-      .controls-left,
-      .controls-right {
         transition: all ease 300ms;
         i {
           color: $black;
@@ -124,7 +107,15 @@ body {
           cursor: pointer;
         }
       }
-      
+      .controls-left {
+        display: none;
+        left: 0;
+        justify-content: center;
+      }
+      .controls-right {
+        right: 0;
+        justify-content: space-between;
+      }
     }
   }
 
@@ -132,11 +123,7 @@ body {
     margin: 0 auto;
     position: relative;
     overflow: auto;
-
-    //max-width: 68rem;
-    // padding: 0 1rem;
     padding: 0;
-    //border-left: 1px solid $side-border-color;
     h1 {
       font-weight: 300;
       margin: 1rem auto;
