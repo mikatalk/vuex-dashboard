@@ -70,7 +70,7 @@ export default {
 
     invertedScrollRatio () {
       // match break point in _layout.scss
-      if (this.windowWidth < 600 && this.windowWidth > 279) {
+      if (this.windowWidth > 600) {
         return 0
       }
       return 1 - Math.min(1, this.scrollRatio * 2)
@@ -84,6 +84,12 @@ export default {
 
   created () {
     window.addEventListener('scroll', this.handleScroll, {passive: true})
+    this.$store.dispatch('updatePageScrollY', window.scrollY)
+    let ws = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+    this.$store.dispatch('updateWindowSize', ws)
   },
 
   destroyed () {
