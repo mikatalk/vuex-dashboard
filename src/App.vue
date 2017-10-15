@@ -68,7 +68,7 @@ export default {
 
     invertedScrollRatio () {
       // match break point in _layout.scss
-      if (this.windowWidth > 600) {
+      if (this.windowWidth > 1 && this.windowWidth > 600) {
         return 0
       }
       return 1 - Math.min(1, this.scrollRatio * 2)
