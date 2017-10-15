@@ -1,0 +1,23 @@
+{
+  "short_name": "Mika I.",
+  "name": "Michael 'Mika' Iriarte",
+  "icons": [
+    {
+      "src": "mika-i-icon-48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "mika-i-icon-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "mika-i-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html",
+  "theme_color": "#ffc608"
+}
