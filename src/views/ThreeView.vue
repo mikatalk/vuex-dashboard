@@ -23,9 +23,6 @@ export default {
     return {
     }
   },
-  created () {
-    this.$store.dispatch('toggleCurrentGroup', null)
-  },
 
   computed: {
     ...mapGetters([

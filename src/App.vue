@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-resize.debounce="handleResizeDebounce">
+  <div id="app" v-resize.debounce="handleResizeDebounce" v:class="{ minify-head: true }">
     
     <header class="header">
       <nav class="inner">
@@ -9,7 +9,7 @@
             <svg viewBox="0 0 75 50"
                  width="75"
                  v-bind:style="{
-                  margin: (invertedScrollRatio*2).toFixed(2)+'vh',
+                  margin: (invertedScrollRatio).toFixed(2)+'rem',
                   width:logoHeight}">
               <polygon points="0,0 25,25, 0,25" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
               <polygon points="50,0 25,25, 50,25" style="fill:black;stroke:none;stroke-width:0;fill-rule:nonzero;"/>
@@ -26,9 +26,12 @@
           <router-link to="/" tag="li">Menu 3</router-link>
         </ul>
 
-        <div class="controls-left" v-bind:class="{'top-scroll-mobile': pageScrollY < 20 }">
+        <router-link to="/menu" 
+                     tag="div"
+                     class="controls-left" 
+                     v-bind:class="{'top-scroll-mobile': pageScrollY < 20 }">
           <i class="fa fa-bars" aria-hidden="true"></i>
-        </div>
+        </router-link>
 
         <div class="controls-right" v-bind:class="{'top-scroll-mobile': pageScrollY < 20 }">
           <i class="fa fa-github-alt" aria-hidden="true"></i>
@@ -37,7 +40,7 @@
 
       </nav>
     </header>
-    
+ 
     <transition name="fade" mode="out-in">
       <router-view class="view"></router-view>
     </transition>
@@ -61,7 +64,8 @@ export default {
   computed: {
     ...mapGetters([
       'pageScrollY',
-      'windowWidth'
+      'windowWidth',
+      'menuOverlayOpened'
     ]),
 
     scrollRatio () {
@@ -107,9 +111,11 @@ export default {
         height: window.innerHeight
       }
       this.$store.dispatch('updateWindowSize', ws)
+    },
+    toggleMenuOverlay () {
+      this.$router.go(-1)
     }
   }
-
 }
 </script>
 

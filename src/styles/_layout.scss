@@ -14,6 +14,10 @@ body {
     text-decoration: none;
   }
 
+  
+}
+
+#app {
   .header {
     background-color: $nav-bg;
     position: fixed;
@@ -25,7 +29,8 @@ body {
       max-width: 70rem;
       box-sizing: border-box;
       margin: 0px auto;
-      padding: 0;
+      border-left: .5rem solid transparent;
+      border-right: .5rem solid transparent;
       position: relative;
       ul.nav {
         margin: 0;
@@ -143,7 +148,6 @@ body {
   }
 }
 
-
 @media (max-width: $mobile-size) {
   html {
     font-size: 1.2em;
@@ -151,9 +155,14 @@ body {
 
     body {
       margin: 12rem 0 0;
-      
-      .header {
+    }
+  }
+
+  #app {
+    .header {
         .inner {
+          border-left: 0rem solid transparent;
+          border-right: 0rem solid transparent;
           ul.nav {
             border-bottom: $bar-width/2 solid black;
             li {
@@ -193,6 +202,5 @@ body {
         max-width: 100%;
 
       }
-    }
   }
 }

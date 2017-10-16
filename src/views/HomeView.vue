@@ -8,10 +8,7 @@
 <script>
 
 export default {
-  name: 'home-view',
-  created () {
-    this.$store.dispatch('toggleCurrentGroup', null)
-  }
+  name: 'home-view'
 }
 
 </script>
