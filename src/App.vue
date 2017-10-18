@@ -1,6 +1,8 @@
 <template>
   <div id="app" v-resize.debounce="handleResizeDebounce" v:class="{ minify-head: true }">
     
+    <three-bg mode="'test'"></three-bg>
+    
     <header class="header">
       <nav class="inner">
 
@@ -52,10 +54,15 @@
 
 import { mapGetters } from 'vuex'
 import resize from 'vue-resize-directive'
+import ThreeBg from './components/ThreeBg'
 
 export default {
 
   name: 'app',
+
+  components: {
+    'three-bg': ThreeBg
+  },
 
   directives: {
     resize

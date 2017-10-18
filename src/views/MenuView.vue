@@ -26,6 +26,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'menu-overlay',
   methods: {

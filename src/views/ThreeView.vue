@@ -32,14 +32,7 @@ export default {
 
   watch: {
     windowWidth (newWidth, oldWidth) {
-      // handle resize
-      const width = this.$refs.container.getBoundingClientRect().width
-      const height = 220
-      this.$refs.canvas.width = width
-      this.$refs.canvas.height = height
-      this.renderer.setSize(width, height)
-      this.camera.aspect = width / height
-      this.camera.updateProjectionMatrix()
+      this.handleResize()
     }
   },
 
@@ -66,7 +59,7 @@ export default {
     this.floor = new Floor()
     this.scene.add(this.floor.mesh)
     this.tick()
-    // this.handleResize()
+    this.handleResize()
   },
   beforeDestroy () {
     this.running = false
@@ -92,6 +85,16 @@ export default {
       // const elapsed = this.clock.getElapsedTime()
       // this.mesh.rotation.y = elapsed * 50 * THREE.Math.DEG2RAD
       this.renderer.render(this.scene, this.camera)
+    },
+    handleResize () {
+      // handle resize
+      const width = this.$refs.container.getBoundingClientRect().width
+      const height = this.$refs.container.getBoundingClientRect().height
+      this.$refs.canvas.width = width
+      this.$refs.canvas.height = height
+      this.renderer.setSize(width, height)
+      this.camera.aspect = width / height
+      this.camera.updateProjectionMatrix()
     }
   }
 }
