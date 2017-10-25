@@ -51,9 +51,9 @@ export default {
       canvas: canvas,
       antialias: true,
       stencil: false,
-      alpha: true
+      alpha: !true
     })
-    this.renderer.setClearColor(0, 0)
+    this.renderer.setClearColor(0xfafafa, 1)
     this.renderer.setPixelRatio(window.devicePixelRatio || 1)
 
     this.floor = new Floor()

@@ -159,12 +159,12 @@ export class GLBg {
     // this.renderer.setPixelRatio(1)
     // this.renderer.setPixelRatio(window.devicePixelRatio || 1)
 
-    document.addEventListener('mousemove', () => this.onDocumentMouseMove(), false)
+    // document.addEventListener('mousemove', () => this.onDocumentMouseMove(), false)
     // window.addEventListener('resize', this.handleResize.bind(this), false)
   }
 
   unload () {
-    document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false)
+    // document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false)
 
     while (this.scene.children.length > 0) {
       const object = this.scene.children[this.scene.children.length - 1]
@@ -180,13 +180,13 @@ export class GLBg {
     this.$refs.canvas.height = 1
   }
 
-  onDocumentMouseMove (event) {
+  handleMouseMove (position) {
     // save previous position
     this.previousMouseX = this.mouseX
     this.previousMouseY = this.mouseY
     // save new position
-    this.mouseX = event.clientX / window.innerWidth
-    this.mouseY = 1.0 - event.clientY / window.innerHeight
+    this.mouseX = position.x // event.clientX / window.innerWidth
+    this.mouseY = position.y // 1.0 - event.clientY / window.innerHeight
     // save uniforms
     this.materialMouseMap.uniforms.mouse.value.x = this.mouseX
     this.materialMouseMap.uniforms.mouse.value.y = this.mouseY
@@ -201,6 +201,9 @@ export class GLBg {
   }
 
   handleResize (width, height) {
+    this.width = width
+    this.height = height
+
     this.halfWidth = width / 2
     this.halfHeight = height / 2
 
@@ -210,8 +213,6 @@ export class GLBg {
   }
 
   update (elapsedTime) {
-    // requestAnimationFrame(this.animate.bind(this));
-
     // PASS 1
     this.renderer.render(this.sceneMouseMap, this.camera, this.rtTextureMouseMap, true)
 

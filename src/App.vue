@@ -1,7 +1,11 @@
 <template>
-  <div id="app" v-resize.debounce="handleResizeDebounce" v:class="{ minify-head: true }">
+  <div id="app" 
+       v-resize.debounce="handleResizeDebounce"
+       v-on:mousemove="handleMouseMove"
+       v:class="{ minify-head: true }">
     
-    <three-bg mode="'test'"></three-bg>
+    <!-- <three-bg mode="'test'"></three-bg> -->
+    <svg-bg mode="'test'"></svg-bg>
     
     <header class="header">
       <nav class="inner">
@@ -55,13 +59,15 @@
 import { mapGetters } from 'vuex'
 import resize from 'vue-resize-directive'
 import ThreeBg from './components/ThreeBg'
+import SVGBg from './components/SVGBg'
 
 export default {
 
   name: 'app',
 
   components: {
-    'three-bg': ThreeBg
+    'three-bg': ThreeBg,
+    'svg-bg': SVGBg
   },
 
   directives: {
@@ -96,11 +102,11 @@ export default {
   created () {
     window.addEventListener('scroll', this.handleScroll, {passive: true})
     this.$store.dispatch('updatePageScrollY', window.scrollY)
-    let ws = {
+    let size = {
       width: window.innerWidth,
       height: window.innerHeight
     }
-    this.$store.dispatch('updateWindowSize', ws)
+    this.$store.dispatch('updateWindowSize', size)
   },
 
   destroyed () {
@@ -113,11 +119,18 @@ export default {
     },
     handleResizeDebounce () {
       this.$store.dispatch('updatePageScrollY', window.scrollY)
-      let ws = {
+      let size = {
         width: window.innerWidth,
         height: window.innerHeight
       }
-      this.$store.dispatch('updateWindowSize', ws)
+      this.$store.dispatch('updateWindowSize', size)
+    },
+    handleMouseMove () {
+      let position = {
+        x: event.clientX / window.innerWidth,
+        y: 1 - event.clientY / window.innerHeight
+      }
+      this.$store.dispatch('updateMousePosition', position)
     },
     toggleMenuOverlay () {
       this.$router.go(-1)

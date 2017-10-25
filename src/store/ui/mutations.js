@@ -9,5 +9,10 @@ export default {
   [types.UPDATE_WINDOW_SIZE] (state, { size }) {
     state.internals.windowWidth = size.width
     state.internals.windowHeight = size.height
+  },
+
+  [types.UPDATE_MOUSE_POSITION] (state, { position }) {
+    state.internals.mouseX = position.x
+    state.internals.mouseY = position.y
   }
 }

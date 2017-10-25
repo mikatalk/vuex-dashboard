@@ -1,4 +1,3 @@
-ThreeBg.vue
 <template>
   <div class="canvas-bg-container" ref="container">
     <canvas ref="canvas"></canvas>
@@ -17,19 +16,28 @@ export default {
 
   computed: {
     ...mapGetters([
-      'windowWidth'
+      'windowWidth',
+      'windowHeight',
+      'mouse'
     ])
   },
 
   watch: {
     windowWidth (newWidth, oldWidth) {
       this.handleResize()
+    },
+    windowHeight (newHeight, oldHeight) {
+      this.handleResize()
+    },
+    mouse (newMouse, oldMouse) {
+      this.glBg.handleMouseMove(newMouse)
     }
   },
 
   mounted () {
     this.glBg = new GLBg(this.$refs.canvas)
     this.running = true
+    this.tick()
   },
 
   beforeDestroy () {
@@ -79,7 +87,8 @@ export default {
   position: fixed;
   top: 0; left: 0;
   bottom: 0; right: 0;
-  z-index: -1;//9999;
+  z-index: -1;
+//  z-index: 9999;
 
   canvas{
     margin: auto;
