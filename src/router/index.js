@@ -10,7 +10,7 @@ const ThreeView = () => import('../views/ThreeView.vue')
 
 export function createRouter () {
   return new Router({
-    // mode: 'history',
+    mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
     routes: [
       { path: '/menu', component: MenuOverlay },
