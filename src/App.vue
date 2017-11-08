@@ -99,14 +99,11 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
+  // created () {
+  // beforeCreate () {
     window.addEventListener('scroll', this.handleScroll, {passive: true})
-    this.$store.dispatch('updatePageScrollY', window.scrollY)
-    let size = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
-    this.$store.dispatch('updateWindowSize', size)
+    this.handleResizeDebounce()
   },
 
   destroyed () {
@@ -121,7 +118,8 @@ export default {
       this.$store.dispatch('updatePageScrollY', window.scrollY)
       let size = {
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
+        pageHeight: document.documentElement.scrollHeight
       }
       this.$store.dispatch('updateWindowSize', size)
     },
