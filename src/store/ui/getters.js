@@ -4,11 +4,5 @@ export default {
     (-state.internals.windowHeight + state.internals.pageHeight),
   pageHeight: state => state.internals.pageHeight,
   windowWidth: state => state.internals.windowWidth,
-  windowHeight: state => state.internals.windowHeight,
-  mouse: state => {
-    return {
-      x: state.internals.mouseX,
-      y: state.internals.mouseY
-    }
-  }
+  windowHeight: state => state.internals.windowHeight
 }

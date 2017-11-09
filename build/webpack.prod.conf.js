@@ -70,6 +70,18 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
+    // new PrerenderSpaPlugin(
+    //   // Absolute path to compiled SPA
+    //   path.resolve(__dirname, '../dist'),
+    //   // List of routes to prerender
+    //   [ '/', '/page-example' ],
+    //   {
+    //     // options
+    //     // Path of index file. By default it's index.html in static root. 
+    //     indexPath: path.resolve(__dirname, '../dist/index.html'),
+
+    //   }
+    // ),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -98,18 +110,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    new PrerenderSpaPlugin(
-      // Absolute path to compiled SPA
-      path.resolve(__dirname, '../dist'),
-      // List of routes to prerender
-      [ '/1', '/2' ],
-      {
-        // options
-        // Path of index file. By default it's index.html in static root. 
-        indexPath: path.resolve(__dirname, '../dist/index.html'),
-
-      }
-    ),
+   
   ]
 })
 

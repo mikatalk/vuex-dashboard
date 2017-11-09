@@ -1,14 +1,15 @@
+@import "variables";
+
 html {
-  color: $black;
+  color: $text;
   font-size: 1em;
   line-height: 1.2;
 }
 body {
   font-family: 'Dosis', sans-serif;
   background-color: $bg;
-  color: $text-color;
+  color: $text;
   overflow-y: scroll;
-  
 
   a {
     text-decoration: none;
@@ -18,7 +19,9 @@ body {
 }
 
 #app {
-  margin: 6rem 0 0;
+  // from the nav bar
+  margin: 5rem 0 0;
+
   .header {
     background-color: $nav-bg;
     position: fixed;
@@ -26,7 +29,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    //border-bottom: $bar-width solid black;
+    //border-bottom: $bar-width solid $primary;
     .inner {
       max-width: 70rem;
       box-sizing: border-box;
@@ -40,7 +43,8 @@ body {
         display: flex;
         flex-flow: wrap;
         justify-content: flex-start;
-        border-bottom: $bar-width solid black;
+        border-bottom: $bar-width solid $primary;
+        min-height: 4rem;
 
         li {
           position: relative;
@@ -49,7 +53,7 @@ body {
           margin: 0;
           font-size: 1.6rem;
           font-weight: 300;
-          padding: 1.3rem 1rem 0;
+          padding: 1rem 1rem;
           text-align: center;
           cursor: pointer;
           transition: all ease 300ms;
@@ -57,24 +61,23 @@ body {
           background-color: $nav-bg;
           min-width: 6rem;
           border: none;
-          text-shadow: 0px 0px 3px $bg;
+          // text-shadow: 0px 0px 3px $bg;
           transition: all ease 300ms;
-          border-bottom: 0px solid $yellow;
+          border-bottom: 0px solid $primary;
           margin-bottom: 0;
 
           &:hover {
             color: $nav-link-color-hover;
-            font-weight: 400;
             background-color: $nav-bg-hover;
-            border-bottom: $bar-width solid $yellow;
+            border-bottom: $bar-width solid $primary;
             margin-bottom: 0;
           }
           &.logo {
-            padding: 1rem .75rem;
-            &:hover {
-              border-bottom: 0px solid black;
-              margin-bottom: 0;
-            }
+            // padding: 1rem .75rem;
+            // &:hover {
+            //   border-bottom: 0px solid $primary;
+            //   margin-bottom: 0;
+            // }
           }
 
           a {
@@ -104,7 +107,7 @@ body {
         bottom: 0;
         transition: all ease 300ms;
         i {
-          color: $black;
+          color: $bg;
           font-size: 1.4rem;
           line-height: 2.4rem;
           margin: 0;
@@ -161,49 +164,52 @@ body {
   }
 
   #app {
-    margin: 12rem 0 0;
+    margin: 4rem 0 0;
     .header {
-        .inner {
-          border-left: 0rem solid transparent;
-          border-right: 0rem solid transparent;
-          ul.nav {
-            border-bottom: $bar-width/2 solid black;
-            li {
-              justify-content: center;
-              justify-content: center;
-              flex-flow: column;
-              display: none;
+      background-color: $primary;
+      .inner {
+        border-left: 0rem solid transparent;
+        border-right: 0rem solid transparent;
+        ul.nav {
+          border-bottom: $bar-width/2 solid $primary;
+          li {
+            justify-content: center;
+            justify-content: center;
+            flex-flow: column;
+            display: none;
 
-              &.logo {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 0 auto;
-              }
+            &.logo {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 0 auto;
+              color: $bg;
+              background: transparent;
             }
           }
-
-          .controls-left,
-          .controls-right {
-            display: flex;
-          } 
         }
-      }
-      
-      .view {
-        margin: 0 auto;
-        position: relative;
-        overflow: auto;
-        max-width: 68rem;
-        // padding: 0 1rem;
-        padding: 0;
-        border: none;
-      }
 
-      &.max-width-desktop,
-      .max-width-desktop {
-        max-width: 100%;
-
+        .controls-left,
+        .controls-right {
+          display: flex;
+        } 
       }
+    }
+    
+    .view {
+      margin: 0 auto;
+      position: relative;
+      overflow: auto;
+      max-width: 68rem;
+      // padding: 0 1rem;
+      padding: 0;
+      border: none;
+    }
+
+    &.max-width-desktop,
+    .max-width-desktop {
+      max-width: 100%;
+
+    }
   }
 }

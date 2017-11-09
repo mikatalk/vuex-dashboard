@@ -6,8 +6,5 @@ export default {
   },
   updateWindowSize ({ commit }, size) {
     commit(types.UPDATE_WINDOW_SIZE, { size })
-  },
-  updateMousePosition ({ commit }, position) {
-    commit(types.UPDATE_MOUSE_POSITION, { position })
   }
 }
