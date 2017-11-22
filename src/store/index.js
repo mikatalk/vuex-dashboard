@@ -10,7 +10,7 @@ import three from './three'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV !== 'production'
+const debug = false // process.env.NODE_ENV !== 'production'
 
 export function createStore () {
   return new Vuex.Store({

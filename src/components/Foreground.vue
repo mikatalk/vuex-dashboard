@@ -1,29 +1,34 @@
 <template>
-  <div class="canvas-bg-container" ref="container">
+  <div class="canvas-foreground-container" ref="container">
     <canvas ref="canvas"></canvas>
   </div>
 </template>
 
 <script>
 
-const { GLBg } = require('./../shaders/GLBg')
+const { GLLayer } = require('./../shaders/GLLayer')
 
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'three-bg',
-  props: ['mode'],
+
+  name: 'foreground',
 
   computed: {
     ...mapGetters([
       'windowWidth',
       'windowHeight',
-      'pageScrollRatio',
-      'mouse'
+      'mouse',
+      'pageScrollY',
+      'pageScrollRatio'
     ])
   },
 
   watch: {
+    pageScrollRatio (newValue, oldValue) {
+      // let numTimes = 1
+      // let variation = 0.3 + (1 + Math.sin(Math.PI / 2 + this.pageScrollRatio * numTimes * Math.PI * 2)) / 2
+    },
     windowWidth (newWidth, oldWidth) {
       this.handleResize()
     },
@@ -31,18 +36,18 @@ export default {
       this.handleResize()
     },
     mouse (newMouse, oldMouse) {
-      this.glBg.handleMouseMove(newMouse)
+      this.gl.handleMouseMove(newMouse)
     }
   },
 
   mounted () {
-    this.glBg = new GLBg(this.$refs.canvas)
+    this.gl = new GLLayer(this.$refs.canvas)
     this.running = true
     this.tick()
   },
 
   beforeDestroy () {
-    this.glBg.unload()
+    this.gl.unload()
     this.running = false
   },
 
@@ -50,15 +55,15 @@ export default {
     tick () {
       if (!this.running) return
       requestAnimationFrame(() => this.tick())
-      // let time = performance.now()
+      let time = performance.now()
       // // this.floor.update(time * 0.007)
       // this.mesh.material.uniforms.time.value = time
 
       // // const elapsed = this.clock.getElapsedTime()
       // // this.mesh.rotation.y = elapsed * 50 * THREE.Math.DEG2RAD
       // this.renderer.render(this.scene, this.camera)
-      console.log(' -> ', this.windowWidth)
-      // this.glBg.update(time, this.pageScrollRatio)
+
+      this.gl.update(time, Math.sin((this.pageScrollRatio * 5) % 1 * Math.PI))
     },
 
     handleResize () {
@@ -68,7 +73,7 @@ export default {
       this.$refs.canvas.width = width
       this.$refs.canvas.height = height
 
-      this.glBg.handleResize(width, height)
+      this.gl.handleResize(width, height)
     }
   }
 }
@@ -79,7 +84,7 @@ export default {
 
 @import "../styles/variables";
 
-.canvas-bg-container {
+.canvas-foreground-container {
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -90,7 +95,6 @@ export default {
   bottom: 0; right: 0;
   z-index: -1;
 //  z-index: 9999;
-
   canvas{
     margin: auto;
     width: 100vw;
@@ -99,3 +103,4 @@ export default {
 }
 
 </style>
+

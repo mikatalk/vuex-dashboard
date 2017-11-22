@@ -8,7 +8,7 @@ body {
   background-color: $bg;
   color: $text-color;
   overflow-y: scroll;
-  
+  margin: 0;
 
   a {
     text-decoration: none;
@@ -18,7 +18,7 @@ body {
 }
 
 #app {
-  margin: 6rem 0 0;
+  margin: 0 0;
   .header {
     background-color: $nav-bg;
     position: fixed;
@@ -161,7 +161,7 @@ body {
   }
 
   #app {
-    margin: 12rem 0 0;
+    margin: 0 0;
     .header {
         .inner {
           border-left: 0rem solid transparent;

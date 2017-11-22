@@ -4,8 +4,7 @@
        v-on:mousemove="handleMouseMove"
        v:class="{ minify-head: true }">
     
-    <!-- <three-bg mode="'test'"></three-bg> -->
-    <svg-bg mode="'test'"></svg-bg>
+    <foreground></foreground>
     
     <header class="header">
       <nav class="inner">
@@ -59,7 +58,7 @@
 import { mapGetters } from 'vuex'
 import resize from 'vue-resize-directive'
 import ThreeBg from './components/ThreeBg'
-import SVGBg from './components/SVGBg'
+import Foreground from './components/Foreground'
 
 export default {
 
@@ -67,7 +66,7 @@ export default {
 
   components: {
     'three-bg': ThreeBg,
-    'svg-bg': SVGBg
+    'foreground': Foreground
   },
 
   directives: {
@@ -140,7 +139,7 @@ export default {
 
 <style lang="scss">
 
-@import "styles/variables";
+// @import "styles/variables";
 
 
 </style>
