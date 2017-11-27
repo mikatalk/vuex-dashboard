@@ -7,7 +7,6 @@
 <script>
 
 const { GLLayer } = require('./../shaders/GLLayer')
-
 import { mapGetters } from 'vuex'
 
 export default {
@@ -63,7 +62,8 @@ export default {
       // // this.mesh.rotation.y = elapsed * 50 * THREE.Math.DEG2RAD
       // this.renderer.render(this.scene, this.camera)
 
-      this.gl.update(time, Math.sin((this.pageScrollRatio * 5) % 1 * Math.PI))
+      // this.gl.update(time, Math.sin((this.pageScrollRatio * 5) % 1 * Math.PI))
+      this.gl.update(time, this.pageScrollRatio)
     },
 
     handleResize () {

@@ -1,6 +1,5 @@
 const THREE = require('three')
 const { deepDispose } = require('./../util/deep-dispose')
-import randomcolor from 'randomcolor'
 
 const vertex = `
   varying vec2 vUv;
@@ -9,16 +8,15 @@ const vertex = `
     gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
   }
 `
-
 const fragment = `
   uniform float elapsedTime;
   uniform float scrollRatio;
-  uniform vec3 color;
   
   varying vec2 vUv;
   
   #define PI 3.14
- 
+  #define TAU 6.28
+
   float circle(vec2 uv, float scale) {
     return length(uv - .5) * 1.0 / scale;
   }
@@ -27,34 +25,171 @@ const fragment = `
     return fract(uv * tiles);
   }
   
+  // float fill (float x, float size) {
+  //   return 1.0 - step(size, x);
+  // }
+
+  // float rect (vec2 uv, vec2 s) {
+  //   uv = uv * 2.0 - 1.0;
+  //   return max( abs(uv.x / s.x), abs(uv.y / s.y));
+  // }
+
+  // float flip (float v, float pct) {
+  //   return mix(v, 1.0 - v, pct);
+  // }
+
+  // float star (vec2 uv, int V, float s) {
+  //   uv = uv * 4.0 - 2.0;
+  //   float a = atan(uv.y, uv.x) / TAU;
+  //   float seg = a * float(V);
+  //   a = ((floor(seg) + 0.5) / float(V) + mix(s, -s, step(.5, fract(seg)))) * TAU;
+  //   return abs(dot(vec2(cos(a), sin(a)), uv));
+  // }
+
+  // float ray (vec2 uv, int N) {
+  //   uv -= 0.5;
+  //   return fract(atan(uv.y, uv.x) / TAU * float(N));
+  // }
+
   vec2 rotate (vec2 uv, float a) {
     uv = mat2(cos(a), -sin(a), sin(a), cos(a)) * (uv - 0.5);
     return uv + 0.5;
   }
 
+
+// float box(vec2 st, vec2 size){
+//     size = vec2(0.5)-size*0.5;
+//     // vec2 uv = smoothstep(size, size+vec2(1e-4), st);
+//     // uv *= smoothstep(size, size+vec2(1e-4),vec2(1.0) - st);
+//     return st.x*st.y;
+// }
+
+// float doLines(vec2 vUv, float angle, float zoom, float size) {
+//   vec2 uv = vUv;
+//   uv = rotate(uv, angle);
+//   uv.x *= zoom;
+//   uv.x += step(1., mod(uv.y,2.0));
+//   uv = fract(uv);
+//   return box(uv,vec2(size, 1.0));
+// }
+
+
   void main() {
-    // vec3 color = vec3(.2, .7, .9);
+    vec3 color = vec3(0.0, 0.0, 0.0);
     float alpha = 0.0;
     vec2 uv = vUv;
 
-    // rotate
-    // uv = rotate(uv, elapsedTime);
 
-    // repeat
-    uv = repeat(uv, vec2(8., 8.));
-    // float ratio = cos(scrollRatio * PI);
-    // float ratio = elapsedTime * (.8 + sin(elapsedTime*0.01) * .1);
-    float ratio = scrollRatio;
-    float scale = (0.5 + sin(ratio * PI * 2.0 + length(vec2(1.0)/length(vUv-vec2(.5)+vec2(sin(elapsedTime)*vec2(.2, .14) )))) )/ 2.0;
-    alpha = circle(uv, clamp(scale, 0.0, 1.0));
-    
-    if(alpha < 0.999) {
-      discard;
-    } else {
-      alpha = 1.0;
-    } 
 
-    gl_FragColor = clamp(vec4( color, alpha), 0.0, 1.0);
+vec3 C1 = vec3(.2, .7, .9);
+
+uv = vUv;
+
+// rotate
+// uv = rotate(uv, elapsedTime);
+
+// repeat
+uv = repeat(uv, vec2(20., 20.));
+
+// uv = rotate(uv, length(uv) + scrollRatio * 40.);
+
+
+float scale = (1.0 + sin(scrollRatio * PI * 10.0 - vUv.x - vUv.y));
+color = vec3(circle(uv, scale));
+// color = max(color, C1);
+if(length(color) < 0.9) {
+  color = C1;
+  alpha = 1.0;
+} else {
+  discard;
+} 
+// uv += scrollRatio;
+
+// alpha = length(color);
+// if ( alpha < .5 ) {
+//   discard; 
+// } else {
+//   alpha = 1.0;
+// }
+
+gl_FragColor = vec4( color, alpha);
+
+
+
+
+
+/*
+uv = rotate(uv, elapsedTime*0.1);
+// color += vec3(.4, .6, .1) * doLines(uv, scrollRatio*PI, 60.0, .13);
+// color += vec3(.8, .2, .7) * doLines(uv, length(uv)+1.+scrollRatio*PI, 60.0, .13);
+color += vec3(.8, .2, .7) * doLines(uv, length(uv)+2.+scrollRatio*PI, 60.0, .13);
+color += vec3(.8, .2, .7) * doLines(uv, length(uv)+3.+scrollRatio*PI, 60.0, .13);
+
+// color += vec3(.4, .6, .1) * doLines(uv, length(uv)*scrollRatio*PI, 60.0, .13);
+
+uv = vUv;
+uv *= vec2(10., 20.);
+// uv.x += step(1., mod(uv.y, 2.0));
+uv = vec2(fract(uv));
+
+// color *= vec3(fill(rect(uv, vec2(.9)), 1.));
+// color *= uv.xxx* 1./vec3(fill(rect(uv, vec2(.5)), 1.));
+color = clamp(color, 0.0, 1.0);
+
+color = min(color, vec3(fill(rect(vUv, vec2(.9)), 1.)) );
+color = max(color, vec3(fill(rect(vUv, vec2(.7)), 1.)) );
+
+gl_FragColor = vec4( color, length(color));
+
+*/
+
+
+
+
+
+// uv = rotate(uv, elapsedTime*0.001);
+// // color += stroke(ray(uv, int(1000.0 * scrollRatio/10.0)*10), .5, .5);
+// color = rect(uv,vec2(.25));
+// // color = max(color, rect(uv,vec2(.5)));
+
+// float outer = rect(uv.xy, vec2(.9));
+// color *= step(0.7, outer);
+
+
+// color = max(color, fill(rect(uv, vec2(.9)), 1.0));
+// color = max(color, fill(rect(uv, vec2(.4)), .5));
+
+
+// color = fill(rect(uv, vec2(.4)), .5);
+// color = max(color, fill(rect(uv, vec2(.4)), .5));
+/*
+color.r += stroke(tray2(uv, ( 100.0 * scrollRatio)), .5, .1);
+color.g += stroke(tray2(uv, ( 100.0 * scrollRatio+.05)), .5, .1);
+color.b += stroke(tray2(uv, ( 100.0 * scrollRatio+.1)), .5, .1);
+
+// uv = rotate(uv, radians(-5.0));// - 0.08;
+// uv = rotate(uv, elapsedTime);
+color += stroke(ray(uv, 8), .5, .15);
+float inner = star(uv.xy, 6, .09);
+float outer = star(uv.yx, 6, .09);
+color *= step(0.7, outer);
+color += fill(outer, 0.5);
+color -= stroke(inner, 0.25, 0.06);
+color += stroke(outer, 0.6, 0.05);
+
+color *= vec3(fill(rect(uv, vec2(.7)), 1.));
+
+color -= vec3(fill(rect(uv, vec2(.6)), 1.));
+color = clamp(color, 0.0, 1.0);
+    gl_FragColor = vec4( 1.0 -color, length(color.rgb));
+
+ */
+
+
+    // gl_FragColor = vec4(0.);
+    // gl_FragColor = vec4( 1.0 -color, length(color.rgb));
+    // gl_FragColor = vec4(vec3(1.0 - color.rrr), color.r);
+    // gl_FragColor = vec4(vec3(1.0), alpha * scrollRatio);
   }
 `
 
@@ -76,8 +211,7 @@ export class GLLayer {
     this.material = new THREE.ShaderMaterial({
       uniforms: {
         elapsedTime: {value: 0},
-        scrollRatio: {value: 0},
-        color: {value: new THREE.Color(randomcolor())}
+        scrollRatio: {value: 0}
         // mouse: {value: new THREE.Vector2(this.mouseX, this.mouseY)},
         // mouseVelocity: {value: new THREE.Vector2(this.previousMouseX, this.previousMouseY)}
       },

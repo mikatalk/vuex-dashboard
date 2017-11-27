@@ -43,8 +43,8 @@ const fragment = `
     // repeat
     uv = repeat(uv, vec2(8., 8.));
     // float ratio = cos(scrollRatio * PI);
-    // float ratio = elapsedTime * (.8 + sin(elapsedTime*0.01) * .1);
-    float ratio = scrollRatio;
+    float ratio = elapsedTime * (.8 + sin(elapsedTime*0.01) * .1);
+    // float ratio = scrollRatio;
     float scale = (0.5 + sin(ratio * PI * 2.0 + length(vec2(1.0)/length(vUv-vec2(.5)+vec2(sin(elapsedTime)*vec2(.2, .14) )))) )/ 2.0;
     alpha = circle(uv, clamp(scale, 0.0, 1.0));
     
