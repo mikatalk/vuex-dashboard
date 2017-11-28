@@ -27,11 +27,6 @@ const fragment = `
     uv = uv * 2.0 - 1.0;
     return max( abs(uv.x / s.x), abs(uv.y / s.y));
   }
-  
-  float sdHexPrism( vec3 p, vec2 h ) {
-    vec3 q = abs(p);
-    return max(q.z-h.y,max((q.x*0.866025+q.y*0.5),q.y)-h.x);
-  }
 
   vec2 repeat(vec2 uv, vec2 tiles) {
     return fract(uv * tiles);
@@ -42,40 +37,34 @@ const fragment = `
     return uv + 0.5;
   }
 
-
   void main() {
+    // vec3 color = vec3(.2, .7, .9);
     float alpha = 0.0;
     vec2 uv = vUv;
 
+    // rotate
+    // uv = rotate(uv, elapsedTime);
+
     // repeat
-    uv = repeat(uv, vec2(10., 10.));
+    uv = repeat(uv, vec2(9., 9.));
+    // float ratio = cos(scrollRatio * PI);
+    float ratio = elapsedTime * (.8 + sin(elapsedTime*0.01) * .1);
+    // float ratio = scrollRatio;
+    float scale = (0.5 + sin(ratio * PI * 2.0 + length(vec2(1.0)/length(vUv-vec2(.5)))) )/ 2.0;
+    // float scale = (0.5 + sin(ratio * PI * 2.0 + length(vec2(1.0)/length(vUv-vec2(.5)+vec2(sin(elapsedTime)*vec2(.2, .14) )))) )/ 2.0;
+    // alpha = circle(uv, scale);
+    // alpha = circle(uv, 1.-clamp(scale, 0., 1.));
+    uv = rotate(uv, elapsedTime * 10.1);
     
-    float ratio = (1.0 + sin(elapsedTime))/ 2.0;
-
-    // uv = rotate(uv, -length(vec2(.5) - vUv) * 5.0 * PI - elapsedTime * 3.0);
+    alpha = rect(uv, vec2(clamp(scale, 0., 1.)));
     
-    float angle = mod( -elapsedTime * 3.0 / 10., PI)*10.;
-    // float angle = (-length(vec2(.5) - vUv) * 5.0 * PI - elapsedTime * 3.0 * 10.)/10.;
-    
-    uv = rotate(uv, angle);
-    
-    vec3 c = color;
-    c.r = mod(angle/PI, 1.0);
-    c.g = 0.0;// mod(angle/PI + .33, 1.0);
-    c.b = 0.0;//mod(angle/PI + .66, 1.0);
-
-    // alpha = rect(uv, vec2(0.1, 1.9));
-
-    // alpha = (sdHexPrism(vec3(1.0, .0, 1.0), uv));
-    alpha = rect(uv, vec2(0.1, 1.9));
-    
-    if(alpha > 0.999) {
+    if(alpha < 0.999) {
       discard;
     } else {
       alpha = 1.0;
     } 
 
-    gl_FragColor = clamp(vec4( c, alpha), 0.0, 1.0);
+    gl_FragColor = clamp(vec4( color, alpha), 0.0, 1.0);
   }
 `
 
