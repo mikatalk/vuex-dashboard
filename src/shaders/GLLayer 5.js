@@ -23,11 +23,6 @@ const fragment = `
     return length(uv - .5) * 1.0 / scale;
   }
 
-  float rect (vec2 uv, vec2 s) {
-    uv = uv * 2.0 - 1.0;
-    return max( abs(uv.x / s.x), abs(uv.y / s.y));
-  }
-
   vec2 repeat(vec2 uv, vec2 tiles) {
     return fract(uv * tiles);
   }
@@ -46,17 +41,14 @@ const fragment = `
     // uv = rotate(uv, elapsedTime);
 
     // repeat
-    uv = repeat(uv, vec2(9., 9.));
+    uv = repeat(uv, vec2(21., 21.));
     // float ratio = cos(scrollRatio * PI);
     float ratio = elapsedTime * (.8 + sin(elapsedTime*0.01) * .1);
     // float ratio = scrollRatio;
     float scale = (0.5 + sin(ratio * PI * 2.0 + length(vec2(1.0)/length(vUv-vec2(.5)))) )/ 2.0;
     // float scale = (0.5 + sin(ratio * PI * 2.0 + length(vec2(1.0)/length(vUv-vec2(.5)+vec2(sin(elapsedTime)*vec2(.2, .14) )))) )/ 2.0;
     // alpha = circle(uv, scale);
-    // alpha = circle(uv, 1.-clamp(scale, 0., 1.));
-    uv = rotate(uv, elapsedTime * 10.1);
-    
-    alpha = rect(uv, vec2(clamp(scale, 0., 1.)));
+    alpha = circle(uv, 1.-clamp(scale, 0., 1.));
     
     if(alpha < 0.999) {
       discard;
